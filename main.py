@@ -32,7 +32,7 @@ class Postgres(BaseModel):
         return create_engine(self.uri)
 
 
-# Declarative classes
+# SQLAlchemy2 Declarative Class
 class Base(DeclarativeBase):
     pass
 
@@ -48,10 +48,6 @@ class Log(Base):
 
     def __repr__(self):
         return f"""Log(id={self.id!r}, logger_name={self.logger_name!r}, level_name={self.level_name!r}, message={self.message!r}, created_at={self.created_at!r})"""
-
-
-# pg = Postgres()
-# Base.metadata.create_all(pg.engine)
 
 
 class PostgresHandler(logging.StreamHandler):
@@ -92,9 +88,6 @@ class PostgresHandler(logging.StreamHandler):
 
 class Logger:
     def __init__(self, module_name: str):
-        """
-        :param module_name: name of the module
-        """
         self.logger = logging.getLogger(module_name)
 
         # Replace FileHandler with PostgresHandler
